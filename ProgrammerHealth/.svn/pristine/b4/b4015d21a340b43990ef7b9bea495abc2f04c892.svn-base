@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>D4242179-2374-4A5A-A247-6DA1B0E23E99</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ProgrammerHealth</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>14EDAAB8-5983-4D33-BD93-0F7E818F1946</key>
+		<string>https://42.159.194.95/svn/ProgrammerHealth</string>
+		<key>3BB985CE-9107-4EFD-99DD-DA6B67B46A39</key>
+		<string>https://github.com/ccgus/fmdb.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>trunk/ProgrammerHealth.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>14EDAAB8-5983-4D33-BD93-0F7E818F1946</key>
+		<string>../../..</string>
+		<key>3BB985CE-9107-4EFD-99DD-DA6B67B46A39</key>
+		<string>../../Classes/Lib/fmdb</string>
+	</dict>
+	<key>IDESourceControlProjectRepositoryRootDictionary</key>
+	<dict>
+		<key>14EDAAB8-5983-4D33-BD93-0F7E818F1946</key>
+		<string>https://42.159.194.95/svn/ProgrammerHealth</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://42.159.194.95/svn/ProgrammerHealth/trunk/ProgrammerHealth.xcodeproj</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>14EDAAB8-5983-4D33-BD93-0F7E818F1946</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>3BB985CE-9107-4EFD-99DD-DA6B67B46A39</string>
+			<key>IDESourceControlWCCName</key>
+			<string>fmdb</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryBranchesRelativeLocationKey</key>
+			<string>branches</string>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlRepositoryTagsRelativeLocationKey</key>
+			<string>tags</string>
+			<key>IDESourceControlRepositoryTrunkRelativeLocationKey</key>
+			<string>trunk</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>14EDAAB8-5983-4D33-BD93-0F7E818F1946</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ProgrammerHealth</string>
+		</dict>
+	</array>
+</dict>
+</plist>

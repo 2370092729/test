@@ -1,0 +1,34 @@
+//
+//  ZZMoreDetailController.m
+//  ProgrammerHealth
+//
+//  Created by Mac on 14-11-8.
+//  Copyright (c) 2014年 Mac. All rights reserved.
+//
+
+#import "ZZMoreDetailController.h"
+
+@interface ZZMoreDetailController ()
+
+@end
+
+@implementation ZZMoreDetailController
+
+//- (void)loadView
+//{
+//    self.view = [[UIWebView alloc] init];
+//}
+
+
+
+- (void)setMessage:(NSString *)message
+{
+    _message = message;
+    
+    UIWebView *webView = [[UIWebView alloc] init];
+    
+    [webView loadHTMLString:message baseURL:nil];
+}
+
+
+@end

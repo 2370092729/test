@@ -1,0 +1,75 @@
+//
+//  ZZUsualDrugController.m
+//  ProgrammerHealth
+//
+//  Created by Mac on 14-11-7.
+//  Copyright (c) 2014年 Mac. All rights reserved.
+//
+
+#import "ZZUsualDrugController.h"
+#import "ZZSearchView.h"
+
+@interface ZZUsualDrugController ()
+
+@property (nonatomic,weak) ZZSearchView *searchView;
+
+@end
+
+@implementation ZZUsualDrugController
+
+- (id)initWithStyle:(UITableViewStyle)style
+{
+    self = [super initWithStyle:style];
+    if (self) {
+        
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.view.backgroundColor = ZZRandomColor;
+    
+    
+    // 添加搜索框
+//    ZZSearchView *searchView = [[ZZSearchView alloc] init];
+//    
+//    // 设置frame
+//    CGFloat navBarHeight = self.navigationController.navigationBar.height;
+//    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+//    searchView.frame = CGRectMake(0, navBarHeight, ZZKScreenWidth, 35);
+//    searchView.backgroundColor = ZZRandomColor;
+//    
+//    [self.navigationController.navigationBar addSubview:searchView];
+//    self.searchView = searchView;
+}
+
+
+
+         
+#pragma mark - Table view data source
+
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    
+    return 0;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return nil;
+}
+
+
+
+
+- (void)dealloc
+{
+//    [self.searchView removeFromSuperview];
+//    self.searchView = nil;
+}
+
+@end

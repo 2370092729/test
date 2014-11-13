@@ -1,0 +1,38 @@
+//
+//  ZZDetailDrugNetwork.m
+//  ProgrammerHealth
+//
+//  Created by Mac on 14-11-8.
+//  Copyright (c) 2014年 Mac. All rights reserved.
+//
+
+#import "ZZDetailDrugNetwork.h"
+#import "MJExtension.h"
+#import "PHNetworkTool.h"
+
+@implementation ZZDetailDrugNetwork
+
++ (void)detailDrugNetworkParmeters:(ZZDetailDrugParmeter *)detailDrugParmeter success:(void(^)(ZZDetailDrugResult *responseObject))success failure:(void(^)(NSError *error))error
+{
+    // 将参数模型转字典
+    NSDictionary *parmeters = detailDrugParmeter.keyValues;
+    
+    NSString *urlStr = NSStringFormat(@"http://api.yi18.net/drug/show?id=%@",detailDrugParmeter.ID);
+    
+    [PHNetworkTool getWithUrlString:urlStr parameters:parmeters success:^(id responseObject) {
+        MyLog(@"%@",responseObject);
+        // 将结果字典转模型
+        ZZDetailDrugResult *detailDrugResult = [ZZDetailDrugResult objectWithKeyValues:responseObject];
+        
+        if (success) {
+            success(detailDrugResult);
+        }
+        
+    } failure:^(NSError *err) {
+        if (error) {
+            error(err);
+        }
+    }];
+}
+
+@end

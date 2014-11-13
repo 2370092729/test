@@ -1,0 +1,21 @@
+//
+//  DLSymptomFrame.m
+//  ProgrammerHealth
+//
+//  Created by David on 11/7/14.
+//  Copyright (c) 2014 Mac. All rights reserved.
+//
+
+#import "DLSymptomFrame.h"
+#import "DLSymptom.h"
+
+@implementation DLSymptomFrame
+
+- (void)setSymptom:(DLSymptom *)symptom
+{
+    _symptom = symptom;
+    CGSize size = [symptom.content sizeWithFont: contenFont];
+    _contentHeight = size.height;
+}
+
+@end

@@ -1,0 +1,29 @@
+//
+//  DLSymptomFrame.m
+//  ProgrammerHealth
+//
+//  Created by David on 11/7/14.
+//  Copyright (c) 2014 Mac. All rights reserved.
+//
+
+#import "DLSymptomFrame.h"
+#import "DLSymptom.h"
+#import "NSString+tool.h"
+
+#define contenWidth 280
+
+@interface DLSymptomFrame ()
+
+@end
+
+@implementation DLSymptomFrame
+
+- (void)setSymptom:(DLSymptom *)symptom
+{
+    _symptom = symptom;
+    
+    CGSize maxSize = CGSizeMake(contenWidth, MAXFLOAT);
+    _contentHeight = [symptom.content sizeWithFont:contenFont andMaxSize:maxSize].height;
+}
+
+@end

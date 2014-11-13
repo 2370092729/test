@@ -1,0 +1,70 @@
+//
+//  TableViewController.m
+//  程序员健康
+//
+//  Created by Mac on 14-10-31.
+//  Copyright (c) 2014年 Mac. All rights reserved.
+//
+
+#import "TableViewController.h"
+#import "ZZTextViewController.h"
+#import "ZZData.h"
+#define reuseIdentifier @"CELL"
+
+@implementation TableViewController
+
+- (NSMutableArray *)dataListM
+{
+    if (_dataListM == nil) {
+        _dataListM = [NSMutableArray array];
+    }
+    return _dataListM;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.title = @"资讯";
+    
+    // 注册cell
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:reuseIdentifier];
+}
+
+
+#pragma mark - Table view data source
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.dataListM.count;
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
+    ZZData *data = self.dataListM[indexPath.row];
+    cell.textLabel.text = [data title];
+ 
+    return cell;
+}
+
+#pragma mark - delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // 跳转到ZZTextViewController
+    
+    ZZTextViewController *textVc = [[ZZTextViewController alloc] init];
+    textVc.data = self.dataListM[indexPath.row];;
+    
+    // nav
+    UINavigationController *navVc = [[UINavigationController alloc] initWithRootViewController:textVc];
+    
+    
+    
+    
+    [self presentViewController:navVc animated:YES completion:nil];
+}
+
+@end

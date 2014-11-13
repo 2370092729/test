@@ -1,0 +1,39 @@
+//
+//  ZZUsualDrugNetwork.m
+//  ProgrammerHealth
+//
+//  Created by Mac on 14-11-7.
+//  Copyright (c) 2014年 Mac. All rights reserved.
+//
+
+#import "ZZUsualDrugNetwork.h"
+#import "PHNetworkTool.h"
+#import "MJExtension.h"
+
+
+
+@implementation ZZUsualDrugNetwork
+
++ (void)usualDrugNetworkParmeters:(ZZUsualDrugParmeter *)usualDrugParmeter success:(void(^)(ZZUsualDrugResult *responseObject))success failure:(void(^)(NSError *error))error
+{
+    // 将参数模型转字典
+    NSDictionary *parmeters = usualDrugParmeter.keyValues;
+    
+    [PHNetworkTool getWithUrlString:@"http://api.yi18.net/drug/list" parameters:parmeters success:^(id responseObject) {
+        
+        // 将结果字典转模型
+        ZZUsualDrugResult *usualDrugResult = [ZZUsualDrugResult objectWithKeyValues:responseObject];
+        
+        if (success) {
+            success(usualDrugResult);
+        }
+    
+    } failure:^(NSError *err) {
+        if (error) {
+            error(err);
+        }
+    }];
+}
+
+
+@end

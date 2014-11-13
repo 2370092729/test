@@ -1,0 +1,123 @@
+//
+//  DLSymptomTool.m
+//  ProgrammerHealth
+//
+//  Created by David on 11/8/14.
+//  Copyright (c) 2014 Mac. All rights reserved.
+//
+
+#import "DLSymptomTool.h"
+#import "FMDB.h"
+#import "PHNetworkTool.h"
+#import "DLSymptom.h"
+#import "MJExtension.h"
+#import "DLSymptomFrame.h"
+
+const FMDatabase *_db;
+
+@implementation DLSymptomTool
+
++ (void)initialize
+{
+    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    path = [path stringByAppendingPathComponent:@"symptom.sqlite"];
+    
+    _db = [FMDatabase databaseWithPath:path];
+    if ([_db open]) {
+        BOOL success = [_db executeUpdate:@"CREATE TABLE IF NOT EXISTS t_commentSymptom(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,name TEXT NOT NULL,dict BLOB NOT NULL);"];
+        if (success) {
+            
+        }else
+        {
+            MyLog(@"%@ 中的第 %d 行--表格创建失败.",[NSString stringWithUTF8String:__FILE__],__LINE__ );
+        }
+    }else
+    {
+        MyLog(@"%@ 中的第 %d 行--表格打开失败.",[NSString stringWithUTF8String:__FILE__ ],__LINE__);
+    }
+}
+
+#pragma mark - 公有方法
++ (void)queryWithKeyValue:(NSString *)name andNoti:(NSString *)noti;
+{
+    if (!name)return;
+    
+    NSArray *symptoms = [self getCatchesWithKey:name];
+    if (symptoms.count) { // 如果缓存中有数据
+        [self postNotification:noti WithAry:symptoms];
+    }else // 缓存中没有数据
+    {
+        // 网络加载数据
+        
+        NSString *urlStr = NSStringFormat(@"http://api.yi18.net/symptom/search?keyword=%@&limit=20",name);
+        
+        [PHNetworkTool getWithUrlString:urlStr parameters:nil success:^(id responseObject) {
+            // 请求成功的话就写如数据库 并且转换模型
+            NSMutableArray *ary = [NSMutableArray array];
+            for (NSDictionary *dict in responseObject[@"yi18"]) {
+                // 存数据
+                [self saveSymptomName:name WithDict:dict];
+                DLSymptom *sym = [DLSymptom objectWithKeyValues:dict];
+                [ary addObject:sym];
+            }
+            [self postNotification:noti WithAry:ary];
+            
+        } failure:^(NSError *error) {
+            MyLog(@"本次请求失败 %@",error.localizedDescription);
+        }];
+        
+    }
+}
+
++ (void)postNotification:(NSString *)name WithAry:(NSArray *)ary
+{
+    NSDictionary *symptomsDict = @{
+                               name : ary
+                               };
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:name object:nil userInfo:symptomsDict];
+}
+
+#pragma mark - 私有方法
+/**
+ *  将JSON存如数据库
+ *
+ *  @param dict JSON
+ */
++ (void)saveSymptomName:(NSString *)name WithDict:(NSDictionary *)dict;
+{
+    NSData *data = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:nil];
+    // 写入数据
+    BOOL success = [_db executeUpdate:@"INSERT INTO t_commentSymptom (name,dict) VALUES('%@',?);",name, data];
+    if (success) {
+//        MyLog(@"数据写入成功");
+    }else
+    {
+        MyLog(@"数据存入失败");
+    }
+}
+
+
+/**
+ *  获取本地缓存
+ *
+ *  @return 返回缓存中的模型数据(如果有缓存的话)
+ */
++ (NSArray *)getCatchesWithKey:(NSString *)name
+{
+    FMResultSet *set = [_db executeQuery:@"SELECT * FROM t_commentSymptom WHERE name = ?",name];
+    NSMutableArray *aryM = [NSMutableArray array];
+    while ([set next]) {
+        NSData *data = [set dataForColumn:@"dict"];
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        DLSymptom *sym = [DLSymptom objectWithKeyValues:dict];
+        
+//        DLSymptomFrame *frame = [[DLSymptomFrame alloc] init];
+//        frame.symptom = [DLSymptom objectWithKeyValues:dict];
+        [aryM addObject:sym];
+    }
+    return aryM;
+}
+
+
+@end

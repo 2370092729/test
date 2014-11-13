@@ -1,0 +1,82 @@
+//
+//  ZZUsualDrugController.m
+//  ProgrammerHealth
+//
+//  Created by Mac on 14-11-7.
+//  Copyright (c) 2014年 Mac. All rights reserved.
+//
+
+#import "ZZUsualDrugController.h"
+#import "ZZSearchView.h"
+
+@interface ZZUsualDrugController () <UINavigationBarDelegate>
+
+@property (nonatomic,weak) ZZSearchView *searchView;
+
+@end
+
+@implementation ZZUsualDrugController
+
+- (id)initWithStyle:(UITableViewStyle)style
+{
+    self = [super initWithStyle:style];
+    if (self) {
+        // 这里设置返回按钮，方便销毁添加到窗口的搜索框
+        [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(liftBtnClick)]];
+        
+        self.view.backgroundColor = ZZRandomColor;
+    }
+    return self;
+}
+/**
+ *  返回按钮的监听方法
+ */
+- (void)liftBtnClick
+{
+    MyLog(@"liftBtnClick");
+    [self.searchView removeFromSuperview];
+    self.searchView = nil;
+    [self.navigationController popViewControllerAnimated:YES];
+    
+    CGFloat navBarHeight = self.navigationController.navigationBar.height;
+    
+    MyLog(@"%f",navBarHeight);
+}
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    // 1，添加搜索框
+    [self setupSearchView];
+    
+    // 2，加载数据
+    [self loadDrugGroups];
+}
+
+/**
+ *  添加搜索框
+ */
+- (void)setupSearchView
+{
+    ZZSearchView *searchView = [[ZZSearchView alloc] init];
+    
+    // 设置frame
+    
+    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+    searchView.frame = CGRectMake(0, 44 + statusBarHeight - 5, ZZKScreenWidth, 35);
+    
+    [[UIApplication sharedApplication].keyWindow addSubview:searchView];
+    self.searchView = searchView;
+}
+/**
+ *  加载数据
+ */
+- (void)loadDrugGroups
+{
+    
+}
+
+
+
+
+@end

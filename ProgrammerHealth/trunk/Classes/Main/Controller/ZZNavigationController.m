@@ -1,0 +1,35 @@
+//
+//  ZZNavigationController.m
+//  程序员健康
+//
+//  Created by Mac on 14-11-4.
+//  Copyright (c) 2014年 Mac. All rights reserved.
+//
+
+#import "ZZNavigationController.h"
+
+@interface ZZNavigationController ()
+
+@end
+
+@implementation ZZNavigationController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+        
+        
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+}
+
+
+@end

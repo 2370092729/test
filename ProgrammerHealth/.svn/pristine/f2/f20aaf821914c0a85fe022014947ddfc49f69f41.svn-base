@@ -1,0 +1,87 @@
+//
+//  ZZSearchView.m
+//  新浪微博
+//
+//  Created by Mac on 14-9-30.
+//  Copyright (c) 2014年 Mac. All rights reserved.
+//
+
+#import "ZZSearchView.h"
+
+@interface ZZSearchView () <UITextFieldDelegate>
+
+@property (nonatomic,weak) UITextField *textField;
+
+@end
+
+@implementation ZZSearchView
+
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        // 1 添加textfield
+        UITextField *textField = [[UITextField alloc]  init];
+        [self addSubview:textField];
+        self.textField = textField;
+        textField.placeholder = @"请输入搜索内容";
+        
+        self.backgroundColor = [UIColor whiteColor];
+    }
+    return self;
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    self.textField.frame = CGRectMake(2, 4, self.width - 6, self.height - 10);
+    
+    
+}
+
+- (void)setTextField:(UITextField *)textField
+{
+    
+    _textField = textField;
+    
+    // 2 设置背景图片
+    UIImage *resizeImage = [UIImage resizeableWithImage:@"searchbar_textfield_background" ];
+    textField.background = resizeImage;
+    
+    // 3 设置文字居中
+    textField.font = [UIFont systemFontOfSize:13];
+    textField.ContentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    
+    // 4 设置占位符
+    textField.placeholder = self.placeholder;
+    
+    // 5 设置清空
+    textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    
+    // 6 设置点击取消第一响应
+    // 6.1 当拖拽tableview的时候取消
+    // 这个在控制器里面实现
+    
+    // 6.2 当点击enter建时取消，当textField的代理
+    textField.delegate = self;
+    
+    // 7 在左边添加放大镜
+    [textField setLeftViewMode:UITextFieldViewModeAlways];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"searchbar_textfield_search_icon"]];
+    imageView.contentMode = UIViewContentModeCenter;
+    
+    textField.leftView = imageView;
+    //        textField.contentMode = UIViewContentModeCenter;
+    textField.leftView.bounds = CGRectMake(0, 0, 30,30);
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self endEditing:YES];
+    return NO;
+}
+
+
+
+
+@end

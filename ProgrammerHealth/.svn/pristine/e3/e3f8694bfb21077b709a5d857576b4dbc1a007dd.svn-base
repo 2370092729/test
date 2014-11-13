@@ -1,0 +1,22 @@
+//
+//  ZZSearchView.h
+//  新浪微博
+//
+//  Created by Mac on 14-9-30.
+//  Copyright (c) 2014年 Mac. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface ZZSearchView : UIView
+/**
+ *  占位符
+ */
+@property (nonatomic,copy) NSString *placeholder;
+
+/**
+ *  搜索框的内容
+ */
+@property (nonatomic,copy) NSString *text;
+
+@end

@@ -1,0 +1,90 @@
+//
+//  DLSymptomSearchController.m
+//  ProgrammerHealth
+//
+//  Created by David on 11/6/14.
+//  Copyright (c) 2014 Mac. All rights reserved.
+//
+
+#import "DLSymptomSearchController.h"
+#import "PHNetworkTool.h"
+#import "MBProgressHUD+Extend.h"
+#import "DLSymptomListViewController.h"
+#import "DLSymptom.h"
+#import "MJExtension.h"
+#import "DLSymptomTool.h"
+
+
+@interface DLSymptomSearchController ()<UISearchBarDelegate>
+
+@end
+
+@implementation DLSymptomSearchController
+
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.items = [DLSymptomTool query];
+}
+
+
+#pragma mark - 设置搜索框
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UISearchBar *searchBar = [[UISearchBar alloc] init];
+    searchBar.delegate = self;
+    return searchBar;
+}
+
+// 调整搜索框的高度
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 44;
+}
+
+// 滚动停止编辑
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self.view endEditing:YES];
+}
+
+#pragma mark 监听SearchBar
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [self searchWithKeyWord:searchBar.text];
+    [MBProgressHUD showMessage:@"正在拼命加载中..."];
+    self.view.window.userInteractionEnabled = NO;
+}
+
+
+#pragma mark - 发送网络请求
+- (void)searchWithKeyWord:(NSString *)keyword
+{
+    NSString *urlStr = NSStringFormat(@"http://api.yi18.net/symptom/search?keyword=%@&limit=50",keyword);
+    [PHNetworkTool getWithUrlString:urlStr parameters:nil success:^(id responseObject) {
+        [MBProgressHUD hideHUD];
+        self.view.window.userInteractionEnabled = YES;
+        
+        // 如果搜索结果有数据
+        if ([responseObject[@"yi18"] count]) {
+            DLSymptomListViewController *symList = [[DLSymptomListViewController alloc] init];
+            symList.items = [DLSymptom objectArrayWithKeyValuesArray:responseObject[@"yi18"]];
+            [self.navigationController pushViewController:symList animated:YES];
+        }else
+        {   // 如果没有搜索结果
+            [MBProgressHUD showError:@"词条被度娘偷走了。换个词试试?"];
+        }
+        
+    } failure:^(NSError *error) {
+        [MBProgressHUD hideHUD];
+        [MBProgressHUD showError:@"搜索失败，请检查您的网络情况，稍后再试。"];
+        self.view.window.userInteractionEnabled = YES;
+    }];
+}
+
+
+
+@end

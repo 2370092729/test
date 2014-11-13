@@ -1,0 +1,35 @@
+//
+//  ZZUsualDrugParmeter.h
+//  ProgrammerHealth
+//
+//  Created by Mac on 14-11-7.
+//  Copyright (c) 2014年 Mac. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@interface ZZUsualDrugParmeter : NSObject
+
+/**
+ *  false int 请求页数，默认是1
+ */
+@property (nonatomic,strong) NSNumber *page;
+
+/**
+ *  false int 每页返回的条数，默认是20
+ */
+@property (nonatomic,strong) NSNumber *limit;
+
+/**
+ *  false string 排序方式 id：最新时间，count：访问最多，默认是id，按最新时间。
+ */
+@property (nonatomic,copy) NSString *type;
+
+/**
+ *  false long id：这里是指药品分类的ID 默认为 null ，也就是全部。
+ */
+@property (nonatomic,copy) NSNumber *ID;
+
+
+
+@end
